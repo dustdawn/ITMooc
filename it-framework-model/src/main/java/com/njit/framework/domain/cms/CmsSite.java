@@ -1,4 +1,4 @@
-package com.njit.framework.domain;
+package com.njit.framework.domain.cms;
 
 import lombok.Data;
 import lombok.ToString;
