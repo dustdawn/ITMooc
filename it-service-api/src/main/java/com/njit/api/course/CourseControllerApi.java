@@ -85,7 +85,7 @@ public interface CourseControllerApi {
      * @return
      */
     @ApiOperation("课程分类集合")
-    public CategoryNode findList();
+    public CategoryNode findCategoryList();
 
 
 
@@ -97,7 +97,7 @@ public interface CourseControllerApi {
      * @return
      */
     @ApiOperation("添加课程图片")
-    public ResponseResult addCoursePic(String courseId, String picId);
+    public ResponseResult addCoursePic(String courseId, String pic);
 
     /**
      * 查看课程图片
