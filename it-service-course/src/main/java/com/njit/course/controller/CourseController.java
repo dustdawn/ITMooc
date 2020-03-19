@@ -97,6 +97,29 @@ public class CourseController implements CourseControllerApi {
         return courseService.addTeachplan(teachplan);
     }
 
+    @Override
+    @GetMapping("/teachplan/get/{id}")
+    public Teachplan getTeachplanById(@PathVariable("id") String id) {
+        return courseService.getTeachplanById(id);
+    }
+
+    /**
+     * 课程计划添加
+     * @param teachplan
+     * @return
+     */
+    @Override
+    @PutMapping("/teachplan/update/{id}")
+    public ResponseResult updateTeachplan(@PathVariable("id") String id, @RequestBody Teachplan teachplan) {
+        return courseService.updateTeachplan(id, teachplan);
+    }
+
+    @Override
+    @DeleteMapping("/teachplan/del/{id}")
+    public ResponseResult deleteTeachplan(@PathVariable("id") String id) {
+        return courseService.deleteTeachplan(id);
+    }
+
     /**
      * 课程分类查询
      * @return

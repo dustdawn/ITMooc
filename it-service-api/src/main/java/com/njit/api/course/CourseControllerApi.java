@@ -78,6 +78,32 @@ public interface CourseControllerApi {
     @ApiOperation("添加课程计划")
     public ResponseResult addTeachplan(Teachplan teachplan);
 
+    /**
+     * 根据id获取课程计划
+     * @param id
+     * @return
+     */
+    @ApiOperation("查询课程计划")
+    public Teachplan getTeachplanById(String id);
+
+    /**
+     * 修改课程计划
+     * @param id
+     * @param teachplan
+     * @return
+     */
+    @ApiOperation("修改课程计划")
+    public ResponseResult updateTeachplan(String id, Teachplan teachplan);
+
+    /**
+     * 删除课程计划
+     * @param id
+     * @return
+     */
+    @ApiOperation("删除课程计划")
+    public ResponseResult deleteTeachplan(String id);
+
+
 
     //=============================课程分类相关
     /**

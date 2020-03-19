@@ -158,7 +158,7 @@ public class CourseService {
     }
 
     /**
-     * 删除课程
+     * 删除课程图片
      * @param courseId
      * @return
      */
@@ -243,6 +243,12 @@ public class CourseService {
             teachplan.setStatus("0");
             teachplan.setDescription(optional.get().getName());
             teachplanRepository.save(teachplan);
+            //修改课程状态为202003
+            CourseBase courseBase = optional.get();
+            courseBase.setStatus("202003");
+            courseBaseRepository.save(courseBase);
+
+
             return teachplan.getId();
         }
         return teachplanList.get(0).getId();
@@ -250,5 +256,44 @@ public class CourseService {
 
     public TeachplanNode findTeachplanList(String courseId) {
         return teachplanMapper.findList(courseId);
+    }
+
+    //根据id查询teachplan
+    public Teachplan getTeachplanById(String id) {
+        Optional<Teachplan> optional = teachplanRepository.findById(id);
+        return optional.orElse(null);
+    }
+
+    /**
+     * 删除课程计划
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackFor = CustomException.class)
+    public ResponseResult deleteTeachplan(String id) {
+        if (this.getTeachplanById(id) != null) {
+            teachplanRepository.deleteById(id);
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
+    }
+
+    /**
+     * 修改课程计划
+     * @param teachplan
+     * @return
+     */
+    public ResponseResult updateTeachplan(String id, Teachplan teachplan) {
+        if (StringUtils.isEmpty(id) || teachplan == null) {
+            return new ResponseResult(CommonCode.INVALID_PARAM);
+        }
+        Teachplan teachplanById = this.getTeachplanById(id);
+        if (teachplanById != null) {
+            BeanUtils.copyProperties(teachplan, teachplanById);
+            teachplanRepository.save(teachplanById);
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
+
     }
 }
