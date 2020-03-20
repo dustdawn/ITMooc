@@ -10,13 +10,13 @@ public class MoocServiceList {
     //Eureka服务注册中心
     public static final String MOOC_GOVERN_CENTER = "mooc-govern-center";
     //CMS服务
-    public static final String MOOC_SERVICE_MANAGE_CMS = "mooc-service-manage-cms";
+    public static final String MOOC_SERVICE_MANAGE_CMS = "mooc-service-cms";
     //课程管理服务
-    public static final String MOOC_SERVICE_MANAGE_COURSE = "mooc-service-manage-course";
+    public static final String MOOC_SERVICE_MANAGE_COURSE = "mooc-service-course";
     //搜索服务
     public static final String MOOC_SERVICE_SEARCH = "mooc-service-search";
     //媒资服务
-    public static final String MOOC_SERVICE_MANAGE_MEDIA = "mooc-service-manage-media";
+    public static final String MOOC_SERVICE_MANAGE_MEDIA = "mooc-service-media";
     //用户中心服务
     public static final String MOOC_SERVICE_UCENTER = "mooc-service-ucenter";
     //学习中心服务
