@@ -1,5 +1,5 @@
 server:
-  port: 31500
+  port: 31450
 spring:
   application:
     name: it-service-media-processor

@@ -6,10 +6,12 @@ import com.njit.course.dao.*;
 import com.njit.framework.domain.course.CourseBase;
 import com.njit.framework.domain.course.CoursePic;
 import com.njit.framework.domain.course.Teachplan;
+import com.njit.framework.domain.course.TeachplanMedia;
 import com.njit.framework.domain.course.ext.CategoryNode;
 import com.njit.framework.domain.course.ext.CourseInfo;
 import com.njit.framework.domain.course.ext.TeachplanNode;
 import com.njit.framework.domain.course.request.CourseListRequest;
+import com.njit.framework.domain.course.response.CourseCode;
 import com.njit.framework.exception.CustomException;
 import com.njit.framework.exception.ExceptionCast;
 import com.njit.framework.model.response.CommonCode;
@@ -46,6 +48,9 @@ public class CourseService {
     TeachplanRepository teachplanRepository;
     @Autowired(required = false)
     TeachplanMapper teachplanMapper;
+
+    @Autowired
+    TeachplanMediaRepository teachplanMediaRepository;
     /**
      * 查询我的课程
      * @param office_id
@@ -283,6 +288,7 @@ public class CourseService {
      * @param teachplan
      * @return
      */
+    @Transactional(rollbackFor = CustomException.class)
     public ResponseResult updateTeachplan(String id, Teachplan teachplan) {
         if (StringUtils.isEmpty(id) || teachplan == null) {
             return new ResponseResult(CommonCode.INVALID_PARAM);
@@ -294,6 +300,55 @@ public class CourseService {
             return new ResponseResult(CommonCode.SUCCESS);
         }
         return new ResponseResult(CommonCode.FAIL);
+
+    }
+
+    /**
+     * 保存课程计划与媒资文件的关联信息
+     * @param teachplanMedia
+     * @return
+     */
+    @Transactional(rollbackFor = CustomException.class)
+    public ResponseResult savemedia(TeachplanMedia teachplanMedia) {
+        if (teachplanMedia == null || StringUtils.isEmpty(teachplanMedia.getTeachplanId())) {
+            ExceptionCast.cast(CommonCode.FAIL);
+        }
+
+        String teachplanId = teachplanMedia.getTeachplanId();
+        Optional<Teachplan> teachplanOptional = teachplanRepository.findById(teachplanId);
+        if (!teachplanOptional.isPresent()) {
+            ExceptionCast.cast(CommonCode.INVALID_PARAM);
+        }
+        //查询课程计划
+        Teachplan teachplan = teachplanOptional.get();
+        //校验课程计划是否为3级
+        String grade = teachplan.getGrade();
+        if (StringUtils.isEmpty(grade) || !grade.equals("3")) {
+            ExceptionCast.cast(CourseCode.COURSE_MEDIS_GRADEEROR);
+        }
+
+        //查询teachplanMedia
+        Optional<TeachplanMedia> optionalTeachplanMedia = teachplanMediaRepository.findById(teachplanId);
+        TeachplanMedia one = null;
+        if (optionalTeachplanMedia.isPresent()) {
+            one = optionalTeachplanMedia.get();
+        } else {
+            one = new TeachplanMedia();
+        }
+
+        //将one保存到数据库
+        //课程id
+        one.setCourseId(teachplan.getCourseid());
+        //视频id
+        one.setMediaId(teachplanMedia.getMediaId());
+        one.setMediaFileOriginalName(teachplanMedia.getMediaFileOriginalName());
+        one.setMediaUrl(teachplanMedia.getMediaUrl());
+        one.setTeachplanId(teachplanId);
+
+        teachplanMediaRepository.save(one);
+
+        return new ResponseResult(CommonCode.SUCCESS);
+
 
     }
 }

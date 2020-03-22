@@ -4,16 +4,16 @@
 
     <resultMap id="categoryMap" type="com.njit.framework.domain.course.ext.CategoryNode">
         <id column="one_id" property="id"></id>
-        <result column="one_name" property="name"></result>
+        <result column="one_name" property="label"></result>
 
         <!--二级级结点-->
         <collection property="children" ofType="com.njit.framework.domain.course.ext.CategoryNode">
             <id column="two_id" property="id"></id>
-            <result column="two_name" property="name"></result>
+            <result column="two_name" property="label"></result>
             <!--三级结点-->
             <collection property="children" ofType="com.njit.framework.domain.course.ext.CategoryNode">
                 <id column="three_id" property="id"></id>
-                <result column="three_name" property="name"></result>
+                <result column="three_name" property="label"></result>
             </collection>
         </collection>
 

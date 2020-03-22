@@ -180,7 +180,8 @@ public class CourseController implements CourseControllerApi {
     }
 
     @Override
-    public ResponseResult savemedia(TeachplanMedia teachplanMedia) {
-        return null;
+    @PostMapping("/savemedia")
+    public ResponseResult savemedia(@RequestBody TeachplanMedia teachplanMedia) {
+        return courseService.savemedia(teachplanMedia);
     }
 }
