@@ -1,4 +1,4 @@
-package com.njit.framework.utils;
+package com.njit.framework.util;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;

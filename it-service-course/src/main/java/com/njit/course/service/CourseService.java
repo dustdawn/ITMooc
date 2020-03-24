@@ -9,6 +9,7 @@ import com.njit.framework.domain.course.Teachplan;
 import com.njit.framework.domain.course.TeachplanMedia;
 import com.njit.framework.domain.course.ext.CategoryNode;
 import com.njit.framework.domain.course.ext.CourseInfo;
+import com.njit.framework.domain.course.ext.CourseView;
 import com.njit.framework.domain.course.ext.TeachplanNode;
 import com.njit.framework.domain.course.request.CourseListRequest;
 import com.njit.framework.domain.course.response.CourseCode;
@@ -344,11 +345,30 @@ public class CourseService {
         one.setMediaFileOriginalName(teachplanMedia.getMediaFileOriginalName());
         one.setMediaUrl(teachplanMedia.getMediaUrl());
         one.setTeachplanId(teachplanId);
-
         teachplanMediaRepository.save(one);
-
         return new ResponseResult(CommonCode.SUCCESS);
+    }
 
-
+    /**
+     * 静态页面查询课程视图，包括基本信息，图片，课程计划等
+     * @param id
+     * @return
+     */
+    public CourseView getCourseView(String id) {
+        CourseView courseView = new CourseView();
+        //查询课程信息
+        Optional<CourseBase> courseBaseOptional = courseBaseRepository.findById(id);
+        if (courseBaseOptional.isPresent()) {
+            CourseBase courseBase = courseBaseOptional.get();
+            courseView.setCourseBase(courseBase);
+        }
+        Optional<CoursePic> coursePicOptional = coursePicRepository.findById(id);
+        if (coursePicOptional.isPresent()) {
+            CoursePic coursePic = coursePicOptional.get();
+            courseView.setCoursePic(coursePic);
+        }
+        TeachplanNode teachplanNode = teachplanMapper.findList(id);
+        courseView.setTeachplanNode(teachplanNode);
+        return courseView;
     }
 }

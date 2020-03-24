@@ -1,4 +1,4 @@
-package com.njit.framework.utils;
+package com.njit.framework.util;
 
 import java.io.IOException;
 import java.io.InputStream;

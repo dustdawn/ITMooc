@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.njit.framework.client.RabbitMQList;
 import com.njit.framework.domain.media.MediaFile;
 import com.njit.framework.domain.media.MediaFileProcess_m3u8;
-import com.njit.framework.utils.HlsVideoUtil;
-import com.njit.framework.utils.Mp4VideoUtil;
+import com.njit.framework.util.HlsVideoUtil;
+import com.njit.framework.util.Mp4VideoUtil;
 import com.njit.media_processor.dao.MediaFileRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +76,7 @@ public class MediaProcessTask {
                 MediaFileProcess_m3u8 mediaFileProcess_m3u8 = new MediaFileProcess_m3u8();
                 mediaFileProcess_m3u8.setErrormsg(result);
                 mediaFileRepository.save(mediaFile);
+
                 return;
             }
         }

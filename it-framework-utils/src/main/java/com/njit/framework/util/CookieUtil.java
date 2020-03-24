@@ -1,4 +1,4 @@
-package com.njit.framework.utils;
+package com.njit.framework.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

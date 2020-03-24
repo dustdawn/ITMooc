@@ -165,8 +165,9 @@ public class CourseController implements CourseControllerApi {
     }
 
     @Override
-    public CourseView courseView(String id) {
-        return null;
+    @GetMapping("/courseview/{id}")
+    public CourseView courseView(@PathVariable("id") String id) {
+        return courseService.getCourseView(id);
     }
 
     @Override

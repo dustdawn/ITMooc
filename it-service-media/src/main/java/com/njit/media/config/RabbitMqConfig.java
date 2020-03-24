@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/3/20 11:34
  */
 @Configuration
-public class RabbitMQConfig {
+public class RabbitMqConfig {
 
     /**
      * 视频处理路由key
