@@ -88,18 +88,18 @@
         </dependency>
 
         <!--eureka服务端依赖-->
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- 客户端负载均衡 -->
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-ribbon</artifactId>
             <version>1.4.7.RELEASE</version>
-        </dependency>-->
+        </dependency>
         <!--feign 集成了 ribbon-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -22,6 +22,7 @@ import com.njit.framework.model.response.ResponseResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +53,26 @@ public class CourseService {
 
     @Autowired
     TeachplanMediaRepository teachplanMediaRepository;
+
+
+
+    // @Autowired
+    // private CmsPageClient cmsPageClient;
+
+
+
+    @Value("${course-publish.siteId}")
+    private String publish_siteId;
+    @Value("${course-publish.templateId}")
+    private String publish_templateId;
+    @Value("${course-publish.pageWebPath}")
+    private String publish_page_webpath;
+    @Value("${course-publish.dataUrlPre}")
+    private String publish_dataUrlPre;
+    @Value("${course-publish.pagePhysicalPath}")
+    private String publish_page_physicalpath;
+    @Value("${course-publish.previewUrl}")
+    private String previewUrl;
     /**
      * 查询我的课程
      * @param office_id
@@ -371,4 +392,6 @@ public class CourseService {
         courseView.setTeachplanNode(teachplanNode);
         return courseView;
     }
+
+
 }

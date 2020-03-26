@@ -3,6 +3,7 @@ package com.njit.cms;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
@@ -12,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
  * @author dustdawn
  * @date 2020/3/19 18:55
  */
-/*@EnableDiscoveryClient*/ //EurekaClient能在EurekaServer被发现服务
+@EnableDiscoveryClient //EurekaClient能在EurekaServer被发现服务
 @SpringBootApplication
 @EntityScan("com.njit.framework.domain.cms")//扫描实体类
 @ComponentScan(basePackages = {"com.njit.api"})//扫描接口
