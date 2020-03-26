@@ -39,6 +39,9 @@ public class MediaUploadService {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
+    private final String PROCESS_IN = "303001";
+    private final String PROCESS_FINISH = "303002";
+
     //得到文件夹路径
     private String getFileFolderPath(String fileMd5) {
         return upload_location + fileMd5.substring(0,1) + "/" + fileMd5.substring(1,2) + "/" + fileMd5 + "/";
@@ -296,6 +299,13 @@ public class MediaUploadService {
         if (!mediaFileOptional.isPresent()) {
             //查询不存在
             ExceptionCast.cast(CommonCode.FAIL);
+        }
+        String processStatus = mediaFileOptional.get().getProcessStatus();
+
+        if (PROCESS_IN.equals(processStatus)) {
+            return new ResponseResult(MediaCode.MEDIA_PROCESS_IN);
+        } else if (PROCESS_FINISH.equals(processStatus)) {
+            return new ResponseResult(MediaCode.MEDIA_PROCESS_FINISH);
         }
 
 
