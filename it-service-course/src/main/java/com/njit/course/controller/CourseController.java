@@ -1,11 +1,8 @@
 package com.njit.course.controller;
 
 import com.njit.api.course.CourseControllerApi;
-import com.njit.course.service.CourseService;
-import com.njit.framework.domain.course.CourseBase;
-import com.njit.framework.domain.course.CoursePic;
-import com.njit.framework.domain.course.Teachplan;
-import com.njit.framework.domain.course.TeachplanMedia;
+import com.njit.course.service.*;
+import com.njit.framework.domain.course.*;
 import com.njit.framework.domain.course.ext.CategoryNode;
 import com.njit.framework.domain.course.ext.CourseInfo;
 import com.njit.framework.domain.course.ext.CourseView;
@@ -25,7 +22,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/course")
 public class CourseController implements CourseControllerApi {
     @Autowired
-    CourseService courseService;
+    private CategoryService categoryService;
+    @Autowired
+    private CourseBaseService courseBaseService;
+    @Autowired
+    private CoursePicService coursePicService;
+    @Autowired
+    private CoursePubService coursePubService;
+    @Autowired
+    private TeachplanMediaService teachplanMediaService;
+    @Autowired
+    private TeachplanService teachplanService;
 
     /**
      * 课程信息列表查询
@@ -38,7 +45,7 @@ public class CourseController implements CourseControllerApi {
     @GetMapping("/coursebase/list/{page}/{size}")
     public QueryResponseResult<CourseInfo> findCourseList(@PathVariable("page") int page, @PathVariable("size") int size,
                                                           CourseListRequest courseListRequest) {
-        return courseService.findCourseList("", page, size, courseListRequest);
+        return courseBaseService.findCourseList("", page, size, courseListRequest);
     }
 
     /**
@@ -49,7 +56,7 @@ public class CourseController implements CourseControllerApi {
     @Override
     @PostMapping("/coursebase/add")
     public ResponseResult addCourseBase(@RequestBody CourseBase courseBase) {
-        return courseService.addCourseBase(courseBase);
+        return courseBaseService.addCourseBase(courseBase);
     }
 
     /**
@@ -60,7 +67,7 @@ public class CourseController implements CourseControllerApi {
     @Override
     @GetMapping("/coursebase/get/{courseId}")
     public CourseBase getCourseBaseById(@PathVariable("courseId") String id) {
-        return courseService.getCourseBaseById(id);
+        return courseBaseService.getCourseBaseById(id);
     }
 
     /**
@@ -72,7 +79,7 @@ public class CourseController implements CourseControllerApi {
     @Override
     @PutMapping("/coursebase/update/{id}")
     public ResponseResult updateCourseBase(@PathVariable("id") String id, @RequestBody CourseBase courseBase) {
-        return courseService.updateCourseBase(id, courseBase);
+        return courseBaseService.updateCourseBase(id, courseBase);
     }
 
     /**
@@ -83,7 +90,7 @@ public class CourseController implements CourseControllerApi {
     @Override
     @GetMapping("/teachplan/list/{courseId}")
     public TeachplanNode findTeachplanList(@PathVariable("courseId") String courseId) {
-        return courseService.findTeachplanList(courseId);
+        return teachplanService.findTeachplanList(courseId);
     }
 
     /**
@@ -94,13 +101,13 @@ public class CourseController implements CourseControllerApi {
     @Override
     @PostMapping("/teachplan/add")
     public ResponseResult addTeachplan(@RequestBody Teachplan teachplan) {
-        return courseService.addTeachplan(teachplan);
+        return teachplanService.addTeachplan(teachplan);
     }
 
     @Override
     @GetMapping("/teachplan/get/{id}")
     public Teachplan getTeachplanById(@PathVariable("id") String id) {
-        return courseService.getTeachplanById(id);
+        return teachplanService.getTeachplanById(id);
     }
 
     /**
@@ -111,13 +118,13 @@ public class CourseController implements CourseControllerApi {
     @Override
     @PutMapping("/teachplan/update/{id}")
     public ResponseResult updateTeachplan(@PathVariable("id") String id, @RequestBody Teachplan teachplan) {
-        return courseService.updateTeachplan(id, teachplan);
+        return teachplanService.updateTeachplan(id, teachplan);
     }
 
     @Override
     @DeleteMapping("/teachplan/del/{id}")
     public ResponseResult deleteTeachplan(@PathVariable("id") String id) {
-        return courseService.deleteTeachplan(id);
+        return teachplanService.deleteTeachplan(id);
     }
 
     /**
@@ -127,7 +134,7 @@ public class CourseController implements CourseControllerApi {
     @Override
     @GetMapping("/category/list")
     public CategoryNode findCategoryList() {
-        return courseService.findCategoryList();
+        return categoryService.findCategoryList();
     }
 
     /**
@@ -139,7 +146,7 @@ public class CourseController implements CourseControllerApi {
     @Override
     @PostMapping("/coursepic/add")
     public ResponseResult addCoursePic(@RequestParam("courseId") String courseId, @RequestParam("pic") String pic) {
-        return courseService.addCoursePic(courseId, pic);
+        return coursePicService.addCoursePic(courseId, pic);
     }
 
     /**
@@ -150,7 +157,7 @@ public class CourseController implements CourseControllerApi {
     @Override
     @GetMapping("/coursepic/list/{courseId}")
     public CoursePic findCoursePic(@PathVariable("courseId") String courseId) {
-        return courseService.listCoursePic(courseId);
+        return coursePicService.listCoursePic(courseId);
     }
 
     /**
@@ -161,28 +168,50 @@ public class CourseController implements CourseControllerApi {
     @Override
     @DeleteMapping("/coursepic/delete")
     public ResponseResult deleteCoursePic(@RequestParam("courseId") String courseId) {
-        return courseService.deleteCoursePic(courseId);
+        return coursePicService.deleteCoursePic(courseId);
     }
 
+    /**
+     * 获取课程相关信息
+     * @param id
+     * @return
+     */
     @Override
     @GetMapping("/courseview/{id}")
     public CourseView courseView(@PathVariable("id") String id) {
-        return courseService.getCourseView(id);
+        return courseBaseService.getCourseView(id);
     }
 
+    /**
+     * 课程预览
+     * @param id
+     * @return
+     */
     @Override
-    public CoursePublishResult preview(String id) {
-        return null;
+    @PostMapping("/preview/{id}")
+    public CoursePublishResult preview(@PathVariable("id") String id) {
+        return coursePubService.preview(id);
     }
 
+    /**
+     * 课程发布
+     * @param id
+     * @return
+     */
     @Override
-    public CoursePublishResult publish(String id) {
-        return null;
+    @PostMapping("/publish/{id}")
+    public CoursePublishResult publish(@PathVariable("id") String id) {
+        return coursePubService.publish(id);
     }
 
+    /**
+     * 课程媒资绑定
+     * @param teachplanMedia
+     * @return
+     */
     @Override
     @PostMapping("/savemedia")
     public ResponseResult savemedia(@RequestBody TeachplanMedia teachplanMedia) {
-        return courseService.savemedia(teachplanMedia);
+        return teachplanMediaService.savemedia(teachplanMedia);
     }
 }

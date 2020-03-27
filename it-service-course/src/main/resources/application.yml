@@ -2,7 +2,7 @@ server:
   port: 31200
 spring:
   application:
-    name: xc-service-course
+    name: mooc-service-course
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/mooc_course?characterEncoding=utf-8
@@ -53,9 +53,10 @@ ribbon:
   ReadTimeout: 6000 #请求处理的超时时间
 
 course-publish:
-  siteId: 5e00751531d28f0994090987  #课程详情页面的站点id，作为rabbitMQ的routingkey
+  siteId: 5e7a09dde5a090447549abf1  #课程详情页面的站点id，作为rabbitMQ的routingkey
   templateId: 5e7a08fbe5a090447549abe0
   previewUrl: http://www.itmooc.com/cms/preview/
   pageWebPath: /course/detail/
   pagePhysicalPath: /course/detail/
   dataUrlPre: http://localhost:31200/course/courseview/
+

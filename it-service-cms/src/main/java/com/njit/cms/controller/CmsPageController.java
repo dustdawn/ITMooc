@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class CmsPageController implements CmsPageControllerApi {
 
     @Autowired
-    CmsPageService cmsPageService;
+    private CmsPageService cmsPageService;
 
     /**
      * 查询页面列表
@@ -104,8 +104,16 @@ public class CmsPageController implements CmsPageControllerApi {
         return cmsPageService.save(cmsPage);
     }
 
+    /**
+     * 一键发布
+     * @param cmsPage
+     * @return
+     */
     @Override
-    public CmsPostPageResult postPageQuick(CmsPage cmsPage) {
-        return null;
+    @PostMapping("/postPageQuick")
+    public CmsPostPageResult postPageQuick(@RequestBody CmsPage cmsPage) {
+        return cmsPageService.postPageQuick(cmsPage);
     }
+
+
 }

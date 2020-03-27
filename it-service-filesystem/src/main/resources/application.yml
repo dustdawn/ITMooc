@@ -2,7 +2,7 @@ server:
   port: 31500
 spring:
   application:
-    name: it-service-filesystem
+    name: mooc-service-filesystem
 #mongo配置
   data:
     mongodb:

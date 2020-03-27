@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: it-service-cms
+    name: mooc-service-cms
   data:
     mongodb:
       uri: mongodb://localhost:27017

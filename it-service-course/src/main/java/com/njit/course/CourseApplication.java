@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
@@ -15,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
  * @author dustdawn
  * @date 2019/12/4 22:52
  */
-// @EnableFeignClients //开启feignClient
+@EnableFeignClients //开启feignClient
 @EnableDiscoveryClient //EurekaClient能在EurekaServer被发现服务
 @SpringBootApplication
 @MapperScan("com.njit.course.com.njit.com.njit.course.com")

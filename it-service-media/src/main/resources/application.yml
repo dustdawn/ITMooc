@@ -2,7 +2,7 @@ server:
   port: 31400
 spring:
   application:
-    name: it-service-media
+    name: mooc-service-media
   data:
     mongodb:
       uri:  mongodb://localhost:27017

@@ -1,8 +1,10 @@
 package com.njit.course.client;
 
+import com.njit.framework.client.MoocServiceList;
 import com.njit.framework.domain.cms.CmsPage;
 import com.njit.framework.domain.cms.response.CmsPageResult;
 import com.njit.framework.domain.cms.response.CmsPostPageResult;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @date 2019/12/13 23:13
  * FeignClient指定服务名
  */
-// @FeignClient(value = "XC-SERVICE-MANAGE-CMS")
+@FeignClient(value = MoocServiceList.MOOC_SERVICE_MANAGE_CMS)
 public interface CmsPageClient {
     /**
      * 根据页面id查询页面信息，远程调用cms请求数据
