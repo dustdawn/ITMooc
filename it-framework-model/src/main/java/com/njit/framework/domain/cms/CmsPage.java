@@ -57,5 +57,8 @@ public class CmsPage {
     //静态文件Id
     private String htmlFileId;
 
+    //发布访问url
+    private String pubUrl;
+
 
 }

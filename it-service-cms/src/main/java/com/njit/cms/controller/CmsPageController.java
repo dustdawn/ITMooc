@@ -4,10 +4,13 @@ import com.njit.api.cms.CmsPageControllerApi;
 import com.njit.cms.service.CmsPageService;
 import com.njit.framework.domain.cms.CmsPage;
 import com.njit.framework.domain.cms.request.QueryPageRequest;
+import com.njit.framework.domain.cms.response.CmsCode;
 import com.njit.framework.domain.cms.response.CmsPageResult;
 import com.njit.framework.domain.cms.response.CmsPostPageResult;
+import com.njit.framework.model.response.CommonCode;
 import com.njit.framework.model.response.QueryResponseResult;
 import com.njit.framework.model.response.ResponseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -113,6 +116,21 @@ public class CmsPageController implements CmsPageControllerApi {
     @PostMapping("/postPageQuick")
     public CmsPostPageResult postPageQuick(@RequestBody CmsPage cmsPage) {
         return cmsPageService.postPageQuick(cmsPage);
+    }
+
+    @PostMapping("/generateHtml/{id}")
+    public ResponseResult generateHtml(@PathVariable("id") String id, @RequestBody CmsPage cmsPage) {
+        CmsPage byId = cmsPageService.getById(id);
+        if (byId == null) {
+            return new ResponseResult(CmsCode.CMS_PAGE_NOTEXISTS);
+        }
+        byId.setPageHtml(cmsPage.getPageHtml());
+        cmsPageService.update(id, byId);
+        String generate = cmsPageService.getPageHtml(id);
+        if (StringUtils.isEmpty(generate)) {
+            return new ResponseResult(CmsCode.CMS_GENERATEHTML_HTMLISNULL);
+        }
+        return new ResponseResult(CommonCode.SUCCESS);
     }
 
 

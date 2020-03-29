@@ -203,18 +203,23 @@ public class CmsPageService {
             byId.setPagePhysicalPath(cmsPage.getPagePhysicalPath());
             //更新dataUrl
             byId.setDataUrl(cmsPage.getDataUrl());
-            if (StringUtils.isNotEmpty(cmsPage.getPageHtml())) {
+            if (cmsPage.getPageHtml() != null) {
                 byId.setPageHtml(cmsPage.getPageHtml());
             }
-            if (StringUtils.isNotEmpty(cmsPage.getPageStatus())) {
+            if (cmsPage.getPageStatus() != null) {
                 byId.setPageStatus(cmsPage.getPageStatus());
             }
+            if (cmsPage.getPubUrl() != null) {
+                byId.setPubUrl(cmsPage.getPubUrl());
+            }
+
+
 
 
             cmsPageRepository.save(byId);
             return new CmsPageResult(CommonCode.SUCCESS, byId);
         }
-        return new CmsPageResult(CommonCode.FAIL, null);
+        return new CmsPageResult(CmsCode.CMS_PAGE_NOTEXISTS, null);
     }
 
     /**
@@ -283,7 +288,7 @@ public class CmsPageService {
             ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
         }
         // 如果已经静态化则返回
-        if ("100002".equals(byId.getPageStatus()) || StringUtils.isNotEmpty(byId.getPageHtml())) {
+        if (!"100001".equals(byId.getPageStatus()) && StringUtils.isNotEmpty(byId.getPageHtml())) {
             return byId.getPageHtml();
         }
         //获取数据模型
@@ -371,6 +376,7 @@ public class CmsPageService {
                 e.printStackTrace();
             }
         }
+        ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_TEMPLATEISNULL);
         return null;
     }
 
@@ -473,6 +479,11 @@ public class CmsPageService {
                 e.printStackTrace();
             }
         }
+        cmsPage.setPageStatus("100003");
+        String url = cmsSite.getSiteDomain() + cmsSite.getSiteWebPath() + cmsPage.getPageWebPath() + cmsPage.getPageName();
+        cmsPage.setPubUrl(url);
+        this.update(pageId, cmsPage);
+
         return new ResponseResult(CommonCode.SUCCESS);
     }
 
@@ -520,8 +531,7 @@ public class CmsPageService {
         if (cmsSite == null) {
             ExceptionCast.cast(CommonCode.FAIL);
         }
-        String url = cmsSite.getSiteDomain() + cmsSite.getSiteWebPath() + cmsPageSave.getPageWebPath();
-        return new CmsPostPageResult(CommonCode.SUCCESS, url);
+        return new CmsPostPageResult(CommonCode.SUCCESS, cmsPage.getPubUrl());
 
     }
 }
