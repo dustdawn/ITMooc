@@ -140,9 +140,9 @@ public class CoursePubService {
             return new CoursePublishResult(CommonCode.FAIL, null);
         }
         //保存课程索引信息
-        CoursePub coursePub = createCoursePub(id);
+        CoursePub coursePub = this.createCoursePub(id);
         //保存到数据库
-        saveCoursePub(id, coursePub);
+        this.saveCoursePub(id, coursePub);
 
         //缓存课程的信息
 
