@@ -531,7 +531,8 @@ public class CmsPageService {
         if (cmsSite == null) {
             ExceptionCast.cast(CommonCode.FAIL);
         }
-        return new CmsPostPageResult(CommonCode.SUCCESS, cmsPage.getPubUrl());
+        CmsPage byId = this.getById(pageId);
+        return new CmsPostPageResult(CommonCode.SUCCESS, byId.getPubUrl());
 
     }
 }
