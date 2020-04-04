@@ -22,7 +22,7 @@
         <div class="banner-left">
             <p class="tit">${courseBase.name}</p>
             <p class="info">
-                <a href="http://ucenter.xuecheng.com/#/learning/${courseBase.id}/0"  target="_blank" v-if="learnstatus == 1" v-cloak>马上学习</a>
+                <a href="http://ucenter.njit.com/#/learning/${courseBase.id}/0"  target="_blank" v-if="learnstatus == 1" v-cloak>马上学习</a>
                 <a href="#"  @click="addopencourse" v-if="learnstatus == 2" v-cloak>立即报名</a>
                 <a href="#"  @click="buy" v-if="learnstatus == 3" v-cloak>立即购买</a>
                 <span><em>难度等级</em>
@@ -182,7 +182,7 @@
                                     <div class="drop-down" style="height: ${firstNode.children?size * 50}px;">
                                         <ul class="list-box">
                                             <#list firstNode.children as secondNode>
-                                                <li><a href="http://ucenter.xuecheng.com/#/learning/${courseBase.id}/${secondNode.id}">${secondNode.pname}</a></li>
+                                                <li><a href="http://ucenter.njit.com/#/learning/${courseBase.id}/${secondNode.id}">${secondNode.pname}</a></li>
                                             </#list>
                                         </ul>
                                     </div>
