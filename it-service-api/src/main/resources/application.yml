@@ -21,7 +21,7 @@ spring:
       max-file-size: 1MB
       # 最大支持请求大小
       max-request-size: 30MB
-xuecheng:
+njit:
   fastdfs:
     connect_timeout_in_seconds: 5
     network_timeout_in_seconds: 30
