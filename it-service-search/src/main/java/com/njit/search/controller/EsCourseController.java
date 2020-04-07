@@ -60,6 +60,7 @@ public class EsCourseController implements EsCourseControllerApi {
     @Override
     public TeachplanMediaPub getmedia(@PathVariable("teachplanId") String teachplanId) {
         String[] teachplanIds = new String[]{teachplanId};
+        //esCourseService.getmedia可以根据多个teachplanId查询媒资信息
         QueryResponseResult<TeachplanMediaPub> queryResponseResult = esCourseService.getmedia(teachplanIds);
         QueryResult<TeachplanMediaPub> queryResult = queryResponseResult.getQueryResult();
         if (queryResult != null) {

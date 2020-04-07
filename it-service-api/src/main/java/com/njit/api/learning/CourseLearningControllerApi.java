@@ -1,0 +1,21 @@
+package com.njit.api.learning;
+
+import com.njit.framework.domain.learning.response.GetMediaResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+/**
+ * @author dustdawn
+ * @date 2020/3/8 22:07
+ */
+@Api(value = "录播课程学习管理", description = "录播课程学习管理")
+public interface CourseLearningControllerApi {
+    /**
+     * 获取课程学习地址
+     * @param courseId
+     * @param teachplanId
+     * @return
+     */
+    @ApiOperation("获取课程学习地址")
+    public GetMediaResult getmedia(String courseId, String teachplanId);
+}
