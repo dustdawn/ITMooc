@@ -23,5 +23,5 @@ public class MoocUserExt extends MoocUser {
     /**
      * 组织信息
      */
-    private String companyId;
+    private String officeId;
 }

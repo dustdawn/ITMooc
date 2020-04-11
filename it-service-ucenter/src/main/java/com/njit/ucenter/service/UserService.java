@@ -49,13 +49,13 @@ public class UserService {
         //根据用户id查询用户所属公司id
         MoocOfficeUser moocOfficeUser = moocOfficeUserRepository.findByUserId(userId);
         //取用户公司id
-        String companyId = null;
+        String officeId = null;
         if (moocOfficeUser != null) {
-            companyId = moocOfficeUser.getCompanyId();
+            officeId = moocOfficeUser.getCompanyId();
         }
         MoocUserExt moocUserExt = new MoocUserExt();
         BeanUtils.copyProperties(moocUser, moocUserExt);
-        moocUserExt.setCompanyId(companyId);
+        moocUserExt.setOfficeId(officeId);
         //设置权限
         moocUserExt.setPermissions(xcMenus);
         return moocUserExt;

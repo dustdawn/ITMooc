@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:31700}
+  port: ${PORT:31300}
 spring:
   application:
     name: mooc-service-ucenter
