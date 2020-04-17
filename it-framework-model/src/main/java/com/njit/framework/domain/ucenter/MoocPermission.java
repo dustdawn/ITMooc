@@ -22,12 +22,12 @@ public class MoocPermission {
     @GeneratedValue(generator = "jpa-uuid")
     @Column(length = 32)
     private String id;
-    @Column(name="roleId")
-    private String role_id;
-    @Column(name="menuId")
-    private String menu_id;
-    @Column(name="createTime")
-    private Date create_time;
+    @Column(name="role_id")
+    private String roleId;
+    @Column(name="menu_id")
+    private String menuId;
+    @Column(name="create_time")
+    private Date createTime;
 
 
 }

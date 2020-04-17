@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njit.ucenter.dao.MoocRoleMapper">
+
+    <resultMap id="RoleMenuMap" type="com.njit.framework.domain.ucenter.ext.MoocRoleAuth">
+        <!--一级节点-->
+        <id column="id" property="id"></id>
+        <result column="role_name" property="roleName"></result>
+        <result column="role_code" property="roleCode"></result>
+        <result column="description" property="description"></result>
+        <!--二级级结点-->
+        <collection property="children" ofType="com.njit.framework.domain.ucenter.ext.MoocMenuNode">
+            <id column="a_menu_id" property="id"></id>
+            <result column="a_menu_name" property="menuName"></result>
+            <!--三级结点-->
+            <collection property="children" ofType="com.njit.framework.domain.ucenter.ext.MoocMenuNode">
+                <id column="b_menu_id" property="id"></id>
+                <result column="b_menu_name" property="menuName"></result>
+                <!--四级结点-->
+                <collection property="children" ofType="com.njit.framework.domain.ucenter.ext.MoocMenuNode">
+                    <id column="c_menu_id" property="id"></id>
+                    <result column="c_menu_name" property="menuName"></result>
+                </collection>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <sql id="RoleMenuTable">
+        (SELECT
+            r.id role_id,
+            r.role_name,
+            r.role_code,
+            r.description,
+            m.id menu_id,
+            m.p_id,
+            m.menu_name,
+            m.`level` `level`
+        FROM
+            mooc_role r,
+            mooc_menu m,
+            mooc_permission p
+        WHERE
+            r.id = p.role_id
+            AND p.menu_id = m.id
+        )
+    </sql>
+
+    <sql id="RoleMenu">
+        (SELECT
+            a.role_id a_role_id,
+            a.role_name a_role_name,
+            a.role_code a_role_code,
+            a.description a_role_description,
+            a.menu_id a_menu_id,
+            a.menu_name a_menu_name,
+            a.`level` a_level,
+            b.menu_id b_menu_id,
+            b.menu_name b_menu_name,
+            b.`level` b_level,
+            c.menu_id c_menu_id,
+            c.menu_name c_menu_name,
+            c.`level` c_level
+        FROM
+        <include refid="RoleMenuTable"/> a
+        LEFT JOIN <include refid="RoleMenuTable"/> b ON a.menu_id = b.p_id AND a.role_id = b.role_id
+        LEFT JOIN <include refid="RoleMenuTable"/> c ON b.menu_id = c.p_id AND a.role_id = c.role_id
+        WHERE
+          a.`level` = '1'
+          )
+    </sql>
+    <select id="findRoleAuthList"  resultMap="RoleMenuMap">
+        SELECT
+            d.id, d.role_name, d.description, d.role_code,
+            a_menu_id, a_menu_name, a_level,
+            b_menu_id, b_menu_name, b_level,
+            c_menu_id, c_menu_name, c_level
+        FROM mooc_role d
+        LEFT JOIN <include refid="RoleMenu"/> e
+        on d.id = e.a_role_id
+    </select>
+</mapper>

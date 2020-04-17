@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njit.ucenter.dao.MoocPermissionMapper">
+
+    <resultMap id="menuList" type="com.njit.framework.domain.ucenter.MoocMenu">
+        <id column="id" property="id"></id>
+        <result column="menu_name" property="menuName"></result>
+    </resultMap>
+
+    <select id="findMenuListByRoleId" parameterType="java.lang.String" resultMap="menuList">
+        SELECT
+            m.id,
+            m.menu_name
+        FROM
+            mooc_role r,
+            mooc_menu m,
+            mooc_permission p
+        WHERE
+            r.id = p.role_id
+            AND p.menu_id = m.id
+            AND r.id = #{roleId}
+    </select>
+</mapper>

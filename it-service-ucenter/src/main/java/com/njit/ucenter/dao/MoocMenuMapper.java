@@ -1,6 +1,7 @@
 package com.njit.ucenter.dao;
 
 import com.njit.framework.domain.ucenter.MoocMenu;
+import com.njit.framework.domain.ucenter.ext.MoocMenuNode;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface MoocMenuMapper {
      * @return
      */
     public List<MoocMenu> selectPermissionByUserId(String userId);
+
+    /**
+     * 查询菜单结点
+     * @return
+     */
+    public MoocMenuNode findMenuList();
 }
