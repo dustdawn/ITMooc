@@ -1,6 +1,7 @@
 package com.njit.api.ucenter;
 
 import com.njit.framework.domain.ucenter.MoocMenu;
+import com.njit.framework.domain.ucenter.MoocOffice;
 import com.njit.framework.domain.ucenter.MoocRole;
 import com.njit.framework.domain.ucenter.MoocUser;
 import com.njit.framework.domain.ucenter.ext.MoocMenuNode;
@@ -23,6 +24,7 @@ import java.util.List;
 public interface UcenterControllerApi {
     /**
      * 根据用户账号查询用户信息
+     *
      * @param username
      * @return
      */
@@ -31,6 +33,7 @@ public interface UcenterControllerApi {
 
     /**
      * 查询用户数据列表
+     *
      * @param page
      * @param size
      * @return
@@ -40,6 +43,7 @@ public interface UcenterControllerApi {
 
     /**
      * 添加用户
+     *
      * @param moocUser
      * @return
      */
@@ -48,6 +52,7 @@ public interface UcenterControllerApi {
 
     /**
      * 修改用户状态
+     *
      * @param id
      * @param status
      * @return
@@ -57,6 +62,7 @@ public interface UcenterControllerApi {
 
     /**
      * 根据id查询用户信息
+     *
      * @param id
      * @return
      */
@@ -65,6 +71,7 @@ public interface UcenterControllerApi {
 
     /**
      * 根据id修改用户信息
+     *
      * @param id
      * @param moocUser
      * @return
@@ -74,6 +81,7 @@ public interface UcenterControllerApi {
 
     /**
      * 删除用户
+     *
      * @param id
      * @return
      */
@@ -82,6 +90,7 @@ public interface UcenterControllerApi {
 
     /**
      * 查询用户所有角色
+     *
      * @param id
      * @return
      */
@@ -90,6 +99,7 @@ public interface UcenterControllerApi {
 
     /**
      * 用户分配角色
+     *
      * @param userId
      * @param roleIds
      * @return
@@ -99,6 +109,7 @@ public interface UcenterControllerApi {
 
     /**
      * 查询角色数据列表
+     *
      * @return
      */
     @ApiOperation("查询角色数据列表")
@@ -106,6 +117,7 @@ public interface UcenterControllerApi {
 
     /**
      * 添加角色
+     *
      * @param moocRole
      * @return
      */
@@ -114,6 +126,7 @@ public interface UcenterControllerApi {
 
     /**
      * 根据id获取角色信息
+     *
      * @param id
      * @return
      */
@@ -122,6 +135,7 @@ public interface UcenterControllerApi {
 
     /**
      * 根据id修改角色
+     *
      * @param id
      * @param moocRole
      * @return
@@ -131,6 +145,7 @@ public interface UcenterControllerApi {
 
     /**
      * 根据id删除角色
+     *
      * @param id
      * @return
      */
@@ -139,6 +154,7 @@ public interface UcenterControllerApi {
 
     /**
      * 角色分配权限
+     *
      * @param roleId
      * @param menuIds
      * @return
@@ -148,6 +164,7 @@ public interface UcenterControllerApi {
 
     /**
      * 角色撤销权限
+     *
      * @param roleId
      * @param menuId
      * @return
@@ -157,6 +174,7 @@ public interface UcenterControllerApi {
 
     /**
      * 查询菜单树形列表
+     *
      * @return
      */
     @ApiOperation("查询菜单树形列表")
@@ -164,10 +182,25 @@ public interface UcenterControllerApi {
 
     /**
      * 查询菜单数据列表
+     *
      * @return
      */
     @ApiOperation("查询菜单数据列表")
     public List<MoocMenu> findMenuList();
 
+    /**
+     * 查询组织列表
+     * @return
+     */
+    @ApiOperation("查询组织列表")
+    public List<MoocOffice> findOfficeList();
+
+    /**
+     * 根据id查询组织
+     * @param officeId
+     * @return
+     */
+    @ApiOperation("查询组织列表")
+    public MoocOffice getOfficeById(String officeId);
 
 }

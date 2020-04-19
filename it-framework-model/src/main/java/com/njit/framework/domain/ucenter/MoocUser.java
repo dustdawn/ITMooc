@@ -25,8 +25,6 @@ public class MoocUser {
     private String username;
     private String password;
     private String name;
-    private String utype;
-    private String userpic;
     private String email;
     private String mobile;
     private String status;
@@ -34,6 +32,8 @@ public class MoocUser {
     private Date createTime;
     @Column(name="update_time")
     private Date updateTime;
+    @Column(name="office_id")
+    private String officeId;
 
 
 }

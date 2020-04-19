@@ -2,6 +2,7 @@ package com.njit.ucenter.controller;
 
 import com.njit.api.ucenter.UcenterControllerApi;
 import com.njit.framework.domain.ucenter.MoocMenu;
+import com.njit.framework.domain.ucenter.MoocOffice;
 import com.njit.framework.domain.ucenter.MoocRole;
 import com.njit.framework.domain.ucenter.MoocUser;
 import com.njit.framework.domain.ucenter.ext.MoocMenuNode;
@@ -12,6 +13,7 @@ import com.njit.framework.domain.ucenter.response.UserRoleResult;
 import com.njit.framework.model.response.QueryResponseResult;
 import com.njit.framework.model.response.ResponseResult;
 import com.njit.ucenter.service.MenuService;
+import com.njit.ucenter.service.OfficeService;
 import com.njit.ucenter.service.RoleService;
 import com.njit.ucenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class UcenterController implements UcenterControllerApi {
     private MenuService menuService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private OfficeService officeService;
 
     /**
      * 根据用户账号查询用户信息
@@ -232,6 +236,22 @@ public class UcenterController implements UcenterControllerApi {
     @GetMapping("/menu/list")
     public List<MoocMenu> findMenuList(){
         return menuService.findMenuList();
+    }
+
+    /**
+     * 查询组织列表
+     * @return
+     */
+    @Override
+    @GetMapping("/office/list")
+    public List<MoocOffice> findOfficeList() {
+        return officeService.findOfficeList();
+    }
+
+    @Override
+    @GetMapping("/office/get/{officeId}")
+    public MoocOffice getOfficeById(@PathVariable("officeId") String officeId) {
+        return officeService.getOfficeById(officeId);
     }
 
 }

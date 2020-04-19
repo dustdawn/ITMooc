@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     private MoocUserRepository moocUserRepository;
-    @Autowired
-    private MoocOfficeUserRepository moocOfficeUserRepository;
     @Autowired(required = false)
     private MoocMenuMapper moocMenuMapper;
     @Autowired
@@ -63,16 +61,10 @@ public class UserService {
         String userId = moocUser.getId();
         //查询用户所有权限
         List<MoocMenu> xcMenus = moocMenuMapper.selectPermissionByUserId(userId);
-        //根据用户id查询用户所属公司id
-        MoocOfficeUser moocOfficeUser = moocOfficeUserRepository.findByUserId(userId);
-        //取用户公司id
-        String officeId = null;
-        if (moocOfficeUser != null) {
-            officeId = moocOfficeUser.getCompanyId();
-        }
+
         MoocUserExt moocUserExt = new MoocUserExt();
         BeanUtils.copyProperties(moocUser, moocUserExt);
-        moocUserExt.setOfficeId(officeId);
+
         //设置权限
         moocUserExt.setPermissions(xcMenus);
         return moocUserExt;
@@ -183,6 +175,9 @@ public class UserService {
         }
         if (StringUtils.isNotEmpty(moocUser.getMobile())) {
             user.setMobile(moocUser.getMobile());
+        }
+        if (StringUtils.isNotEmpty(moocUser.getOfficeId())) {
+            user.setOfficeId(moocUser.getOfficeId());
         }
         user.setUpdateTime(new Date());
         moocUserRepository.save(user);
