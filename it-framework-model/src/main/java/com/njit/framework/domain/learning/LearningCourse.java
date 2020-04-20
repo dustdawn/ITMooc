@@ -26,6 +26,4 @@ public class LearningCourse implements Serializable {
     private String courseId;
     @Column(name = "user_id")
     private String userId;
-    private String status;
-
 }
