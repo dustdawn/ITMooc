@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @date 2019/12/13 23:13
  * FeignClient指定服务名
  */
-@FeignClient(value = MoocServiceList.MOOC_SERVICE_MANAGE_CMS)
+@FeignClient(value = MoocServiceList.MOOC_SERVICE_CMS)
 public interface CmsPageClient {
     /**
      * 根据页面id查询页面信息，远程调用cms请求数据
