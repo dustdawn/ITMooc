@@ -83,6 +83,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         String user_permission_string  = StringUtils.join(user_permission.toArray(), ",");
         // 将username，password，授权信息封装到springsecurity框架的user对象中
+        // AuthorityUtils.commaSeparatedStringToAuthorityList配置用户权限到SpringSecurity
         UserJwt userDetails = new UserJwt(username,
                 password,
                 AuthorityUtils.commaSeparatedStringToAuthorityList(user_permission_string));
