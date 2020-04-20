@@ -17,8 +17,6 @@ public class UserJwt extends User {
 
     private String id;
     private String name;
-    private String userpic;
-    private String utype;
     private String officeId;
 
     public UserJwt(String username, String password, Collection<? extends GrantedAuthority> authorities) {
