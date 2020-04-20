@@ -2,7 +2,7 @@ server:
   port: ${PORT:31750}
 spring:
   application:
-    name: itmooc-service-selection
+    name: mooc-service-selection
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/mooc_selection?characterEncoding=utf-8
