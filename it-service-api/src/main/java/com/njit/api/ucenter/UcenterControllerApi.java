@@ -89,6 +89,16 @@ public interface UcenterControllerApi {
     public ResponseResult deleteUser(String id);
 
     /**
+     *
+     * @param userId
+     * @param passwordOld
+     * @param passwordNew
+     * @return
+     */
+    @ApiOperation("修改密码")
+    public ResponseResult changePassword(String userId, String passwordOld, String passwordNew);
+
+    /**
      * 查询用户所有角色
      *
      * @param id

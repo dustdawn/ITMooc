@@ -1,8 +1,12 @@
 package com.njit.ucenter.service;
 
-import com.njit.framework.domain.ucenter.*;
+import com.njit.framework.domain.ucenter.MoocMenu;
+import com.njit.framework.domain.ucenter.MoocRole;
+import com.njit.framework.domain.ucenter.MoocUser;
+import com.njit.framework.domain.ucenter.MoocUserRole;
 import com.njit.framework.domain.ucenter.ext.MoocUserExt;
 import com.njit.framework.domain.ucenter.request.UserListRequest;
+import com.njit.framework.domain.ucenter.response.AuthCode;
 import com.njit.framework.domain.ucenter.response.UcenterCode;
 import com.njit.framework.domain.ucenter.response.UserRoleResult;
 import com.njit.framework.exception.CustomException;
@@ -11,7 +15,10 @@ import com.njit.framework.model.response.CommonCode;
 import com.njit.framework.model.response.QueryResponseResult;
 import com.njit.framework.model.response.QueryResult;
 import com.njit.framework.model.response.ResponseResult;
-import com.njit.ucenter.dao.*;
+import com.njit.ucenter.dao.MoocMenuMapper;
+import com.njit.ucenter.dao.MoocUserRepository;
+import com.njit.ucenter.dao.MoocUserRoleMapper;
+import com.njit.ucenter.dao.MoocUserRoleRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -280,5 +287,27 @@ public class UserService {
         return new ResponseResult(CommonCode.SUCCESS);
     }
 
-
+    /**
+     * 修改密码
+     * @param userId
+     * @param passwordOld
+     * @param passwordNew
+     * @return
+     */
+    @Transactional(rollbackFor = CustomException.class)
+    public ResponseResult changePassword(String userId, String passwordOld, String passwordNew) {
+        Optional<MoocUser> userOptional = moocUserRepository.findById(userId);
+        if (userOptional == null) {
+            return new ResponseResult(UcenterCode.USER_NOT_EXISTS);
+        }
+        MoocUser user = userOptional.get();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        boolean matches = bCryptPasswordEncoder.matches(passwordOld, user.getPassword());
+        if (!matches) {
+            return new ResponseResult(AuthCode.AUTH_CREDENTIAL_ERROR);
+        }
+        user.setPassword(bCryptPasswordEncoder.encode(passwordNew));
+        moocUserRepository.save(user);
+        return new ResponseResult(CommonCode.SUCCESS);
+    }
 }

@@ -35,6 +35,7 @@ public class CourseApplication {
         return new RestTemplate(new OkHttp3ClientHttpRequestFactory());
     }
 
+    /**远程接口调用feign拦截，需登录后才能调用*/
     /*@Bean
     public FeignClientInterceptor getFeignClientInterceptor() {
         return new FeignClientInterceptor();

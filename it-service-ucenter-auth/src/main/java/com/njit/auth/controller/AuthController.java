@@ -1,7 +1,9 @@
 package com.njit.auth.controller;
 
 import com.njit.api.auth.AuthControllerApi;
+import com.njit.auth.client.UserClient;
 import com.njit.auth.service.AuthService;
+import com.njit.framework.domain.ucenter.MoocUser;
 import com.njit.framework.domain.ucenter.ext.AuthToken;
 import com.njit.framework.domain.ucenter.request.LoginRequest;
 import com.njit.framework.domain.ucenter.response.AuthCode;
@@ -14,10 +16,7 @@ import com.njit.framework.util.CookieUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -42,6 +41,11 @@ public class AuthController implements AuthControllerApi {
     String cookieDomain;
     @Value("${auth.cookieMaxAge}")
     int cookieMaxAge;
+
+    @Autowired
+    UserClient userClient;
+
+
 
     /**
      * 登录
@@ -87,6 +91,12 @@ public class AuthController implements AuthControllerApi {
         //清除cookie
         this.clearCookie(uid);
         return new ResponseResult(CommonCode.SUCCESS);
+    }
+
+    @Override
+    @PostMapping("/userlogon")
+    public ResponseResult logon(MoocUser moocUser) {
+        return userClient.addUser(moocUser);
     }
 
     /**

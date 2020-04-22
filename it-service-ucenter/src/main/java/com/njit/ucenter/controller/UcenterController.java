@@ -119,6 +119,14 @@ public class UcenterController implements UcenterControllerApi {
         return userService.deleteUser(id);
     }
 
+    @Override
+    @PutMapping("/user/changepw")
+    public ResponseResult changePassword(@RequestParam String userId,
+                                         @RequestParam String passwordOld,
+                                         @RequestParam String passwordNew) {
+        return userService.changePassword(userId, passwordOld, passwordNew);
+    }
+
     /**
      * 查询用户所有角色
      * @param id

@@ -11,9 +11,11 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class LoginRequest extends RequestData {
+public class LogonRequest extends RequestData {
 
     String username;
     String password;
-
+    String email;
+    String mobile;
+    
 }

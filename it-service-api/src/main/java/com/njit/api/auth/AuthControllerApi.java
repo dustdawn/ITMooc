@@ -1,5 +1,6 @@
 package com.njit.api.auth;
 
+import com.njit.framework.domain.ucenter.MoocUser;
 import com.njit.framework.domain.ucenter.request.LoginRequest;
 import com.njit.framework.domain.ucenter.response.JwtResult;
 import com.njit.framework.domain.ucenter.response.LoginResult;
@@ -27,6 +28,14 @@ public interface AuthControllerApi {
      */
     @ApiOperation("退出")
     public ResponseResult logout();
+
+    /**
+     * 用户注册
+     * @param moocUser
+     * @return
+     */
+    @ApiOperation("注册")
+    public ResponseResult logon(MoocUser moocUser);
 
     /**
      * 查询userjwt令牌
