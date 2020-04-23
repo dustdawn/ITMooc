@@ -120,7 +120,7 @@ public class UcenterController implements UcenterControllerApi {
     }
 
     @Override
-    @PutMapping("/user/changepw")
+    @PostMapping("/user/changepw")
     public ResponseResult changePassword(@RequestParam String userId,
                                          @RequestParam String passwordOld,
                                          @RequestParam String passwordNew) {
