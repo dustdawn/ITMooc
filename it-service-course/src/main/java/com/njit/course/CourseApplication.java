@@ -1,5 +1,6 @@
 package com.njit.course;
 
+import com.njit.framework.interceptor.FeignClientInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,8 +37,8 @@ public class CourseApplication {
     }
 
     /**远程接口调用feign拦截，需登录后才能调用*/
-    /*@Bean
+    @Bean
     public FeignClientInterceptor getFeignClientInterceptor() {
         return new FeignClientInterceptor();
-    }*/
+    }
 }

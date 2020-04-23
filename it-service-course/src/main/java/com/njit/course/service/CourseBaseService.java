@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,28 +45,45 @@ public class CourseBaseService {
 
     /**
      * 查询我的课程
-     * @param office_id
      * @param page
      * @param size
      * @param courseListRequest
      * @return
      */
-    public QueryResponseResult<CourseInfo> findCourseList(String office_id, int page, int size, CourseListRequest courseListRequest) {
+    public QueryResponseResult<CourseInfo> findCourseList(int page, int size, CourseListRequest courseListRequest) {
 
         if (courseListRequest == null) {
             courseListRequest = new CourseListRequest();
         }
-        //courseListRequest.setOfficeId(office_id);
 
         PageHelper.startPage(page, size);
 
-        Page<CourseInfo> courseList = courseMapper.findCourseListPage(courseListRequest);
-        List<CourseInfo> result = courseList.getResult();
-        long total = courseList.getTotal();
-
         QueryResult<CourseInfo> queryResult = new QueryResult<>();
-        queryResult.setList(result);
-        queryResult.setTotal(total);
+
+        if (StringUtils.isNotEmpty(courseListRequest.getCourseIds())) {
+            List<CourseInfo> courseInfoList = new ArrayList<>();
+            String[] courseIds = courseListRequest.getCourseIds().split(",");
+            for (int i = 0; i < courseIds.length; i++) {
+                CourseBase courseBase = this.getCourseBaseById(courseIds[i]);
+                CourseInfo courseInfo = new CourseInfo();
+                BeanUtils.copyProperties(courseBase, courseInfo);
+                courseInfoList.add(courseInfo);
+            }
+
+            queryResult.setList(courseInfoList);
+            queryResult.setTotal(courseInfoList.size());
+        }else {
+            Page<CourseInfo> courseList = courseMapper.findCourseListPage(courseListRequest);
+            List<CourseInfo> result = courseList.getResult();
+            long total = courseList.getTotal();
+
+
+            queryResult.setList(result);
+            queryResult.setTotal(total);
+        }
+
+
+
 
         return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
     }

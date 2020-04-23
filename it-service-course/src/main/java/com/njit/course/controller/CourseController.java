@@ -33,6 +33,8 @@ public class CourseController implements CourseControllerApi {
     private TeachplanMediaService teachplanMediaService;
     @Autowired
     private TeachplanService teachplanService;
+    @Autowired
+    private CourseTeacherService courseTeacherService;
 
     /**
      * 课程信息列表查询
@@ -45,7 +47,7 @@ public class CourseController implements CourseControllerApi {
     @GetMapping("/coursebase/list/{page}/{size}")
     public QueryResponseResult<CourseInfo> findCourseList(@PathVariable("page") int page, @PathVariable("size") int size,
                                                           CourseListRequest courseListRequest) {
-        return courseBaseService.findCourseList("", page, size, courseListRequest);
+        return courseBaseService.findCourseList(page, size, courseListRequest);
     }
 
     /**
@@ -213,5 +215,11 @@ public class CourseController implements CourseControllerApi {
     @PostMapping("/savemedia")
     public ResponseResult savemedia(@RequestBody TeachplanMedia teachplanMedia) {
         return teachplanMediaService.savemedia(teachplanMedia);
+    }
+
+
+    @GetMapping("/teacher/{id}")
+    public CourseTeacher getTeacherInfo(@PathVariable("id") String id) {
+        return courseTeacherService.getTeacherInfo(id);
     }
 }

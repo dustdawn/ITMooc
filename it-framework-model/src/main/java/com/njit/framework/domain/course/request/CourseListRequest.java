@@ -16,4 +16,9 @@ public class CourseListRequest extends RequestData {
      * 机构Id
      */
     private String officeId;
+
+    /**
+     * 课程ids
+     */
+    private String courseIds;
 }

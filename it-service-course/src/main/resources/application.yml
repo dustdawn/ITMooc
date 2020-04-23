@@ -54,7 +54,7 @@ ribbon:
 
 course-publish:
   siteId: 5e7a09dde5a090447549abf1  #课程详情页面的站点id，作为rabbitMQ的routingkey
-  templateId: 5e7a08fbe5a090447549abe0
+  templateId: 5ea19e8ef700c35b5c66e837
   previewUrl: http://www.itmooc.com/cms/preview/
   pageWebPath: /course/detail/
   pagePhysicalPath: /course/detail/
