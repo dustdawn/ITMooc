@@ -49,7 +49,7 @@ public class ChooseCourseTask {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(new Date());
 
-        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) - 1);
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
         Date time = calendar.getTime();
         // 查询前100条任务
         List<MoocTask> taskList = taskService.findTaskList(time, 100);
