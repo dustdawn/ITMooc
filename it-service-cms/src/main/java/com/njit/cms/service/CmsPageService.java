@@ -288,9 +288,9 @@ public class CmsPageService {
             ExceptionCast.cast(CmsCode.CMS_PAGE_NOTEXISTS);
         }
         // 如果已经静态化则返回
-        if (!"100001".equals(byId.getPageStatus()) && StringUtils.isNotEmpty(byId.getPageHtml())) {
+        /*if (!"100001".equals(byId.getPageStatus()) && StringUtils.isNotEmpty(byId.getPageHtml())) {
             return byId.getPageHtml();
-        }
+        }*/
         //获取数据模型
         Map modal = this.getModalByPageId(pageId);
         if (null == modal) {
