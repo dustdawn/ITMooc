@@ -3,11 +3,14 @@ package com.njit.learning.service;
 import com.njit.framework.domain.course.TeachplanMediaPub;
 import com.njit.framework.domain.learning.LearningCode;
 import com.njit.framework.domain.learning.LearningCourse;
+import com.njit.framework.domain.learning.request.LearningCourceRequest;
 import com.njit.framework.domain.learning.response.GetMediaResult;
 import com.njit.framework.domain.task.MoocTask;
 import com.njit.framework.domain.task.MoocTaskHistory;
 import com.njit.framework.exception.ExceptionCast;
 import com.njit.framework.model.response.CommonCode;
+import com.njit.framework.model.response.QueryResponseResult;
+import com.njit.framework.model.response.QueryResult;
 import com.njit.framework.model.response.ResponseResult;
 import com.njit.learning.client.CourseSearchClient;
 import com.njit.learning.dao.LearningCourseRepository;
@@ -15,6 +18,9 @@ import com.njit.learning.dao.MoocTaskHistoryRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,6 +87,56 @@ public class LearningService {
             MoocTaskHistory taskHistory = new MoocTaskHistory();
             BeanUtils.copyProperties(task, taskHistory);
             moocTaskHistoryRepository.save(taskHistory);
+        }
+        return new ResponseResult(CommonCode.SUCCESS);
+    }
+
+    /**
+     * 查询选课列表
+     * @param page
+     * @param size
+     * @param learningCourceRequest
+     * @return
+     */
+    public QueryResponseResult<LearningCourse> findList(int page, int size, LearningCourceRequest learningCourceRequest) {
+        if (learningCourceRequest == null) {
+            learningCourceRequest = new LearningCourceRequest();
+        }
+        String userId = "";
+        if (StringUtils.isNotEmpty(learningCourceRequest.getUserId())) {
+            userId = learningCourceRequest.getUserId();
+        }
+
+
+        //分页参数
+        if (page <= 0) {
+            page = 1;
+        }
+        page = page - 1;
+        if (size <= 0) {
+            size = 10;
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<LearningCourse> all = learningCourseRepository.findByUserId(pageable, userId);
+
+        QueryResult<LearningCourse> queryResult = new QueryResult<>();
+        queryResult.setList(all.getContent());
+        queryResult.setTotal(all.getTotalElements());
+
+        return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+    }
+
+    /**
+     * 查看是否选课
+     * @param userId
+     * @param courseId
+     * @return
+     */
+    public ResponseResult findCourseStatus(String userId, String courseId) {
+        LearningCourse learningCourse = learningCourseRepository.findByUserIdAndCourseId(userId, courseId);
+        if (learningCourse == null) {
+            return new ResponseResult(CommonCode.FAIL);
         }
         return new ResponseResult(CommonCode.SUCCESS);
     }

@@ -1,13 +1,14 @@
 package com.njit.learning.controller;
 
 import com.njit.api.learning.CourseLearningControllerApi;
+import com.njit.framework.domain.learning.LearningCourse;
+import com.njit.framework.domain.learning.request.LearningCourceRequest;
 import com.njit.framework.domain.learning.response.GetMediaResult;
+import com.njit.framework.model.response.QueryResponseResult;
+import com.njit.framework.model.response.ResponseResult;
 import com.njit.learning.service.LearningService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author dustdawn
@@ -32,5 +33,24 @@ public class CourseLearningController implements CourseLearningControllerApi {
                                    @PathVariable("teachplanId")String teachplanId) {
 
         return learningService.getmedia(courseId,teachplanId);
+    }
+
+    @Override
+    @GetMapping("/list/{page}/{size}")
+    public QueryResponseResult<LearningCourse> findList(@PathVariable("page") int page,
+                                                        @PathVariable("size") int size,
+                                                        LearningCourceRequest learningCourceRequest) {
+        return learningService.findList(page, size, learningCourceRequest);
+    }
+
+    /**
+     * 查询是否选课
+     * @param userId
+     * @param courseId
+     * @return
+     */
+    @GetMapping("/get/status/{userId}/{courseId}")
+    public ResponseResult findCourseStatus(@PathVariable("userId") String userId, @PathVariable("courseId") String courseId) {
+        return learningService.findCourseStatus(userId, courseId);
     }
 }

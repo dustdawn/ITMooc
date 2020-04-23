@@ -25,6 +25,8 @@ spring:
     password: guest
     publisher-confirms: true
     virtual-host: /
+  jpa:
+    show-sql: true
 eureka:
   client:
     registerWithEureka: true #服务注册开关
