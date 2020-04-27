@@ -12,6 +12,7 @@ import com.njit.framework.domain.course.ext.CourseInfo;
 import com.njit.framework.domain.course.ext.CourseView;
 import com.njit.framework.domain.course.ext.TeachplanNode;
 import com.njit.framework.domain.course.request.CourseListRequest;
+import com.njit.framework.domain.course.response.CourseCode;
 import com.njit.framework.exception.CustomException;
 import com.njit.framework.exception.ExceptionCast;
 import com.njit.framework.model.response.CommonCode;
@@ -157,5 +158,19 @@ public class CourseBaseService {
         TeachplanNode teachplanNode = teachplanMapper.findList(id);
         courseView.setTeachplanNode(teachplanNode);
         return courseView;
+    }
+
+    /**
+     * 删除课程
+     * @param id
+     * @return
+     */
+    public ResponseResult deleteCourseBase(String id) {
+        CourseBase courseBase = this.getCourseBaseById(id);
+        if (courseBase == null) {
+            return new ResponseResult(CourseCode.COURSE_GET_NOTEXISTS);
+        }
+        courseBaseRepository.delete(courseBase);
+        return new ResponseResult(CommonCode.SUCCESS);
     }
 }

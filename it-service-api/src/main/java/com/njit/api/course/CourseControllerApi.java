@@ -59,7 +59,13 @@ public interface CourseControllerApi {
     @ApiOperation("更新课程基础信息")
     public ResponseResult updateCourseBase(String id, CourseBase courseBase);
 
-
+    /**
+     * 删除课程
+     * @param id
+     * @return
+     */
+    @ApiOperation("删除课程")
+    public ResponseResult deleteCourseBase(String id);
 
     //=============================课程计划相关
     /**

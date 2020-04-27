@@ -103,9 +103,9 @@ public class TeachplanService {
             teachplan.setStatus("0");
             teachplan.setDescription(optional.get().getName());
             teachplanRepository.save(teachplan);
-            //修改课程状态为202003
+            //修改课程状态为202002
             CourseBase courseBase = optional.get();
-            courseBase.setStatus("202003");
+            courseBase.setStatus("202002");
             courseBaseRepository.save(courseBase);
 
             return teachplan.getId();

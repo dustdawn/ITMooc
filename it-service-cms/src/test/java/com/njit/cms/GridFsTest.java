@@ -50,6 +50,19 @@ public class GridFsTest {
         // objectId对应fs.files中的id，fs.chunk中的files_id
     }
 
+    //存文件
+    @Test
+    public void testStore2() throws FileNotFoundException {
+        //定义file
+        File file =new File("d:/ITMooc/Template/index_banner.ftl");
+        //定义fileInputStream
+        FileInputStream fileInputStream = new FileInputStream(file);
+        //存储fs_chinks表里
+        ObjectId objectId = gridFsTemplate.store(fileInputStream, "index_banner.ftl");
+        System.out.println(objectId);
+        // objectId对应fs.files中的id，fs.chunk中的files_id
+    }
+
     //取文件
     @Test
     public void queryFile() throws IOException {

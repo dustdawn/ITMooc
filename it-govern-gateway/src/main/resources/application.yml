@@ -52,6 +52,7 @@ zuul:
       strip-prefix: false
 
 
+
 eureka:
   client:
     registerWithEureka: true #服务注册开关

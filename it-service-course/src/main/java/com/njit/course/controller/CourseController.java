@@ -12,6 +12,7 @@ import com.njit.framework.domain.course.response.CoursePublishResult;
 import com.njit.framework.model.response.QueryResponseResult;
 import com.njit.framework.model.response.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -82,6 +83,18 @@ public class CourseController implements CourseControllerApi {
     @PutMapping("/coursebase/update/{id}")
     public ResponseResult updateCourseBase(@PathVariable("id") String id, @RequestBody CourseBase courseBase) {
         return courseBaseService.updateCourseBase(id, courseBase);
+    }
+
+    /**
+     * 删除课程
+     * @param id
+     * @return
+     */
+    @Override
+    @PreAuthorize("hasAuthority('teachmanager_course_del')")
+    @DeleteMapping("coursebase/delete/{id}")
+    public ResponseResult deleteCourseBase(@PathVariable("id") String id) {
+        return courseBaseService.deleteCourseBase(id);
     }
 
     /**
