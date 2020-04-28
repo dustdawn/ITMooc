@@ -63,6 +63,46 @@ public class GridFsTest {
         // objectId对应fs.files中的id，fs.chunk中的files_id
     }
 
+    //存文件
+    @Test
+    public void testStore3() throws FileNotFoundException {
+        //定义file
+        File file =new File("d:/ITMooc/Template/hot_course.ftl");
+        //定义fileInputStream
+        FileInputStream fileInputStream = new FileInputStream(file);
+        //存储fs_chinks表里
+        ObjectId objectId = gridFsTemplate.store(fileInputStream, "hot_course.ftl");
+        System.out.println(objectId);
+        // objectId对应fs.files中的id，fs.chunk中的files_id
+    }
+
+    //存文件
+    @Test
+    public void testStore4() throws FileNotFoundException {
+        //定义file
+        File file =new File("d:/ITMooc/Template/java_course.ftl");
+        //定义fileInputStream
+        FileInputStream fileInputStream = new FileInputStream(file);
+        //存储fs_chinks表里
+        ObjectId objectId = gridFsTemplate.store(fileInputStream, "java_course.ftl");
+        System.out.println(objectId);
+        // objectId对应fs.files中的id，fs.chunk中的files_id
+    }
+
+    //存文件
+    @Test
+    public void testStore5() throws FileNotFoundException {
+        //定义file
+        File file =new File("d:/ITMooc/Template/c_course.ftl");
+        //定义fileInputStream
+        FileInputStream fileInputStream = new FileInputStream(file);
+        //存储fs_chinks表里
+        ObjectId objectId = gridFsTemplate.store(fileInputStream, "c_course.ftl");
+        System.out.println(objectId);
+        // objectId对应fs.files中的id，fs.chunk中的files_id
+    }
+
+
     //取文件
     @Test
     public void queryFile() throws IOException {
